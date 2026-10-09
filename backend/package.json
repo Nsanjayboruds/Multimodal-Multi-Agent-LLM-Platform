@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx concurrently \"npm start --prefix gateway\" \"npm start --prefix services/agent\" \"npm start --prefix services/auth\" \"npm start --prefix services/billing\" \"npm start --prefix services/chat\"",
+    "dev": "npx concurrently \"npm run dev --prefix gateway\" \"npm run dev --prefix services/agent\" \"npm run dev --prefix services/auth\" \"npm run dev --prefix services/billing\" \"npm run dev --prefix services/chat\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ioredis": "^5.11.1"
+  }
+}

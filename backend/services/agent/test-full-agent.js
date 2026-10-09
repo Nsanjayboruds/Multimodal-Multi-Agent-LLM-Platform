@@ -1,0 +1,14 @@
+import { codingAgent } from "./agents/coding.agent.js";
+import connectDb from "./config/db.js";
+import dotenv from "dotenv";
+dotenv.config();
+
+const run = async () => {
+    await connectDb();
+    const result = await codingAgent({
+        prompt: 'give a landing page code',
+        userId: '6a7ef456be4998441e36d1f6'
+    });
+    console.log("FINAL RESULT:", JSON.stringify(result, null, 2));
+};
+run();

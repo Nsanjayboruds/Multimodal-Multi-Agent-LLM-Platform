@@ -1,0 +1,38 @@
+graph TD
+    Client["React Frontend (Vite)"]
+    Gateway["API Gateway (:9000)"]
+    
+    subgraph Microservices
+        Auth["Auth Service (:9001)"]
+        Chat["Chat Service (:9002)"]
+        Agent["Agent Service (:9003)"]
+        Billing["Billing Service (:9004)"]
+    end
+    
+    Redis[("Redis (Sessions & Limits)")]
+    Mongo[("MongoDB (Primary DB)")]
+    S3[("AWS S3 (Artifacts)")]
+    
+    LLMs(("LLMs (Groq, Gemini)"))
+    Tools(("External APIs (Pollinations, Tavily)"))
+
+    Client -->|HTTP Request| Gateway
+    Gateway -->|/api/auth| Auth
+    Gateway -->|/api/chat| Chat
+    Gateway -->|/api/agent| Agent
+    Gateway -->|/api/billing| Billing
+
+    Auth <--> Redis
+    Auth <--> Mongo
+    
+    Chat <--> Mongo
+    
+    Agent -->|Check Limits| Redis
+    Agent -->|Deduct Cost| Billing
+    Agent -->|Save Result| Chat
+    Agent -->|Upload Documents| S3
+    
+    Agent <--> LLMs
+    Agent <--> Tools
+    
+    Billing <--> Mongo
